@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>All Issues</title>
+    </head>
+    <body>
+        <h1>All Issues</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Reporter</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Assigned To</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for issue in issues %}
+                <tr>
+                    <td>{{ issue.id }}</td>
+                    <td>{{ issue.employee_id }}</td>
+                    <td>{{ issue.category }}</td>
+                    <td>{{ issue.description }}</td>
+                    <td>{{ issue.status }}</td>
+                    <td>{{ issue.support_id }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

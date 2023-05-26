@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <h1>Login</h1>
+        <form method="POST">
+            {% with messages = get_flashed_messages(with_categoris=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {{ form.hidden_tag() }}
+            <label for="email">Email:</label><br>
+            {{form.email(id='email')}}<br>
+            <label for="password">Password:</label><br>
+            {{form.password(id='password')}}<br>
+            {{form.submit()}}
+        </form>
+    </body>
+</html>

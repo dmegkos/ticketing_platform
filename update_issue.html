@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Update Issue</title>
+    </head>
+    <body>
+        <h1>Update Issue</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label for="employee_id">Your Employee ID:</label><br>
+            {{ form.employee_id(id='employee_id') }}<br>
+            <label for="category">Category:</label><br>
+            {{ form.category(id='category') }}<br>
+            <label for="description">Issue Description:</label><br>
+            {{ form.description(id='description') }}<br>
+            {{ form.submit() }}
+        </form>
+    </body>
+</html>

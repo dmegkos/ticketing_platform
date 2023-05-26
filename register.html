@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register</title>
+    </head>
+    <body>
+        <h1>Register</h1>
+        <form method="POST">
+            {% with messages = get_flashed_messages(with_categoris=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {{ form.hidden_tag() }}
+            <label for="username">Username:</label><br>
+            {{form.username(id='username')}}<br>
+            <label for="email">Email:</label><br>
+            {{form.email(id='email')}}<br>
+            <label for="password">Password:</label><br>
+            {{form.password(id='password')}}<br>
+            <label for="confirm_password">Confirm Password:</label><br>
+            {{form.confirm_password(id='confirm_password')}}<br>
+            {{form.submit()}}
+        </form>
+    </body>
+</html>
