@@ -6,7 +6,7 @@
     <body>
         <h1>Login</h1>
         <form method="POST">
-            {% with messages = get_flashed_messages(with_categoris=true) %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
                         <div class="{{ category }}">{{ message }}</div>
@@ -18,7 +18,10 @@
             {{form.email(id='email')}}<br>
             <label for="password">Password:</label><br>
             {{form.password(id='password')}}<br>
+            <label for="remember">Remember Me:</label><br>
+            {{ form.remember(id='remember') }}<br>
             {{form.submit()}}
+            <a href="{{ url_for('register') }}" class="btn btn-secondary">Register</a>
         </form>
     </body>
 </html>

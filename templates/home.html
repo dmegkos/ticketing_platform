@@ -1,9 +1,17 @@
 <!DOCTYPE html>
+
 <html>
     <head>
         <title>IT Helpdesk Ticketing System</title>
     </head>
     <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <h1>Welcome to the IT Helpdesk Ticketing System!</h1>
         <p>Please navigate to the issues page to report a new issue or view current issues.</p>
     </body>

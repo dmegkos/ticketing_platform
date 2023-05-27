@@ -7,8 +7,6 @@
         <h1>Report a New Issue</h1>
         <form method="POST">
             {{ form.hidden_tag() }}
-            <label for="employee_id">Your Employee ID:</label><br>
-            {{ form.employee_id(id='employee_id') }}<br>
             <label for="category">Category:</label><br>
             {{ form.category(id='category') }}<br>
             <label for="description">Issue Description:</label><br>

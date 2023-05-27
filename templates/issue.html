@@ -5,11 +5,11 @@
     </head>
     <body>
         <h1>Issue Details</h1>
-        <p>ID: {{ issue.id}}</p>
-        <p>Reporter: {{ issue.employee_id }}</p>
+        <p>Reporter: {{ issue.employee_name }}</p>
+        <p>Reporter ID: {{ issue.employee_id }}</p>
         <p>Category: {{ issue.category }}</p>
         <p>Description: {{ issue.description }}</p>
         <p>Status: {{ issue.status }}</p>
-        <p>Assigned To: {{ issue.support_id }}</p>
+        <p>Assigned To: {{ issue.support_name }}</p>
     </body>
 </html>

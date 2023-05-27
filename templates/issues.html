@@ -8,8 +8,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Reporter</th>
+                    <th>Reporter ID</th>
                     <th>Category</th>
                     <th>Description</th>
                     <th>Status</th>
@@ -19,12 +19,12 @@
             <tbody>
                 {% for issue in issues %}
                 <tr>
-                    <td>{{ issue.id }}</td>
+                    <td>{{ issue.employee_name }}</td>
                     <td>{{ issue.employee_id }}</td>
                     <td>{{ issue.category }}</td>
                     <td>{{ issue.description }}</td>
                     <td>{{ issue.status }}</td>
-                    <td>{{ issue.support_id }}</td>
+                    <td>{{ issue.support_name }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
