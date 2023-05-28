@@ -6,20 +6,16 @@
     <body>
         <h1>Update Issue</h1>
         <form method="POST">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
             {{ form.hidden_tag() }}
-            <label for="category">Category:</label><br>
-            {{ form.category(id='category') }}<br>
-            <label for="description">Issue Description:</label><br>
-            {{ form.description(id='description') }}<br>
+            {% if user_type == "employee" %}
+                <label for="category">Category:</label><br>
+                {{ form.category(id='category') }}<br>
+                <label for="description">Description:</label><br>
+                {{ form.description(id='description') }}<br>
+            {% elif user_type == "support" %}
+                <label for="status">Status:</label><br>
+                {{ form.status(id='status') }}<br>
+            {% endif %}
             {{ form.submit() }}
         </form>
     </body>

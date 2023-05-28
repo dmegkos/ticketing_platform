@@ -4,14 +4,23 @@
         <title>All Issues</title>
     </head>
     <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <h1>All Issues</h1>
+        {% if user_type == "employee" %}
+            <a href="{{ url_for('add_issue') }}" class="btn btn-primary">Report New Issue</a>
+        {% endif %}
         <table>
             <thead>
                 <tr>
                     <th>Reporter</th>
-                    <th>Reporter ID</th>
+                    <th>Location</th>
                     <th>Category</th>
-                    <th>Description</th>
                     <th>Status</th>
                     <th>Assigned To</th>
                 </tr>
@@ -20,11 +29,11 @@
                 {% for issue in issues %}
                 <tr>
                     <td>{{ issue.employee_name }}</td>
-                    <td>{{ issue.employee_id }}</td>
+                    <td>{{ issue.location }}</td>
                     <td>{{ issue.category }}</td>
-                    <td>{{ issue.description }}</td>
                     <td>{{ issue.status }}</td>
                     <td>{{ issue.support_name }}</td>
+                    <td><a href="{{ url_for('issue', issue_id=issue.issue_id) }}">View Details</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

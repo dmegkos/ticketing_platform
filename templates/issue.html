@@ -7,9 +7,19 @@
         <h1>Issue Details</h1>
         <p>Reporter: {{ issue.employee_name }}</p>
         <p>Reporter ID: {{ issue.employee_id }}</p>
+        <p>Location: {{ issue.location }}</p>
         <p>Category: {{ issue.category }}</p>
-        <p>Description: {{ issue.description }}</p>
         <p>Status: {{ issue.status }}</p>
         <p>Assigned To: {{ issue.support_name }}</p>
+        <p>Description: {{ issue.description }}</p>
+        <form action="{{ url_for('update_issue', issue_id=issue.issue_id) }}" method="GET">
+            <input type="submit" value="Update Issue">
+        </form>
+        {% if issue.employee_email == current_user.email %}
+        <form action="{{ url_for('delete_issue', issue_id=issue.issue_id) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+            <input type="submit" value="Delete Issue" onclick="return confirm('Are you sure you want to delete this issue?')">
+        </form>
+        {% endif %}
     </body>
 </html>
