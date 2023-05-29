@@ -1,35 +1,67 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Register</title>
-    </head>
-    <body>
-        <h1>Register</h1>
-        <form method="POST">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            {{ form.hidden_tag() }}
-            <label for="employee_id">Employee ID:</label><br>
-            {{form.employee_id(id='employee_id')}}<br>
-            <label for="name">Name:</label><br>
-            {{form.name(id='name')}}<br>
-            <label for="email">Email:</label><br>
-            {{form.email(id='email')}}<br>
-            <label for="phone">Phone:</label><br>
-            {{form.phone(id='phone')}}<br>
-            <label for="location">Location:</label><br>
-            {{form.location(id='location')}}<br>
-            <label for="password">Password:</label><br>
-            {{form.password(id='password')}}<br>
-            <label for="confirm_password">Confirm Password:</label><br>
-            {{form.confirm_password(id='confirm_password')}}<br>
-            {{form.submit()}}
-        </form>
-        <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - HelpDesk Support System</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #dcebf5; /* Creme color */
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        .form-control,
+        .btn {
+            border-radius: 15px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="form-container">
+            <h2 class="text-center">Register</h2>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="employee_id">Employee ID:</label>
+                    {{form.employee_id(id='employee_id', class_='form-control')}}
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    {{form.name(id='name', class_='form-control')}}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    {{form.email(id='email', class_='form-control')}}
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    {{form.phone(id='phone', class_='form-control')}}
+                </div>
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    {{form.location(id='location', class_='form-control')}}
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    {{form.password(id='password', class_='form-control')}}
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    {{form.confirm_password(id='confirm_password', class_='form-control')}}
+                </div>
+                {{form.submit(class_='btn btn-primary btn-block')}}
+            </form>
+            <p class="text-center">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+        </div>
+    </div>
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>

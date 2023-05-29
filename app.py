@@ -266,7 +266,8 @@ def account():
     user_type = get_user_type(current_user.email)
     form = UpdateAccountForm()
     if form.validate_on_submit():
-        if form.delete.data:
+        print(request.form)
+        if request.form.get('action') == 'delete':
             if user_type == 'employee':
                 employee_user = Employee.query.filter_by(email=current_user.email).first()
                 if employee_user:
@@ -274,30 +275,31 @@ def account():
             db.session.delete(current_user)
             db.session.commit()
             flash('Your account has been deleted.', 'success')
-            return redirect(url_for('home'))
-        user_with_same_email = Users.query.filter_by(email=form.email.data).first()
-        if user_with_same_email and (user_with_same_email.id != current_user.id):
-            flash('Email is already in use. Please choose a different one.', 'danger')
-        else:
-            if form.password.data:
-                current_user.password = generate_password_hash(form.password.data, method='sha256')
-            old_email = current_user.email
-            current_user.email = form.email.data
-            if user_type == 'employee':
-                employee_user = Employee.query.filter_by(email=old_email).first()
-                if employee_user:
-                    employee_user.email = form.email.data
-                    # update employee_email in issues
-                    issues_to_update = Issue.query.filter_by(employee_email=old_email).all()
-                    for issue in issues_to_update:
-                        issue.employee_email = form.email.data
-            elif user_type == 'support':
-                support_user = SupportStaff.query.filter_by(email=old_email).first()
-                if support_user:
-                    support_user.email = form.email.data
-            db.session.commit()
-            flash('Your account has been updated!', 'success')
-        return redirect(url_for('home'))
+            return redirect(url_for('login'))
+        elif request.form.get('action') == 'update': 
+            user_with_same_email = Users.query.filter_by(email=form.email.data).first()
+            if user_with_same_email and (user_with_same_email.id != current_user.id):
+                flash('Email is already in use. Please choose a different one.', 'danger')
+            else:
+                if form.password.data:
+                    current_user.password = generate_password_hash(form.password.data, method='sha256')
+                old_email = current_user.email
+                current_user.email = form.email.data
+                if user_type == 'employee':
+                    employee_user = Employee.query.filter_by(email=old_email).first()
+                    if employee_user:
+                        employee_user.email = form.email.data
+                        # update employee_email in issues
+                        issues_to_update = Issue.query.filter_by(employee_email=old_email).all()
+                        for issue in issues_to_update:
+                            issue.employee_email = form.email.data
+                elif user_type == 'support':
+                    support_user = SupportStaff.query.filter_by(email=old_email).first()
+                    if support_user:
+                        support_user.email = form.email.data
+                db.session.commit()
+                flash('Your account has been updated!', 'success')
+            return redirect(url_for('account'))
     elif request.method == 'GET':
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form, user_type=user_type)

@@ -1,35 +1,99 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Account</title>
-    </head>
-    <body>
-        <h1>Account</h1>
-        <form method="POST">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="{{ category }}">{{ message }}</div>
-                    {% endfor %}
+<head>
+    <title>Account</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dcebf5;
+        }
+
+        .container {
+            width: 30%;
+            margin: auto;
+            margin-top: 5%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        .btn {
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .btn-logout {
+            background-color: #d3d3d3;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand">HelpDesk</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                {% if user_type == "employee" %}
+                    <a class="nav-item nav-link" href="{{ url_for('my_issues') }}">My Issues</a>
+                {% elif user_type == "support" %}
+                    <a class="nav-item nav-link" href="{{ url_for('all_issues') }}">All Issues</a>
                 {% endif %}
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">About</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="text-center">Account</h1>
+        <form id="accountForm" method="POST">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             {% endwith %}
             {{ form.hidden_tag() }}
-            <label for="email">Email:</label><br>
-            {{form.email(id='email')}}<br>
-            <label for="password">New Password:</label><br>
-            {{form.password(id='password')}}<br>
-            <label for="confirm_password">Confirm New Password:</label><br>
-            {{form.confirm_password(id='confirm_password')}}<br>
-            {{form.submit()}}
-            {% if user_type == "employee" %}
-                {{form.delete()}}
-            {% endif %}
-            <a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a>
-            {% if user_type == "employee" %}
-                <a href="{{ url_for('my_issues') }}">Issues</a>
-            {% elif user_type == "support" %}
-                <a href="{{ url_for('all_issues') }}">Issues</a>
-            {% endif %}
+            <div class="form-group">
+                <label for="email">Email:</label>
+                {{form.email(id='email', class='form-control')}}
+            </div>
+            <div class="form-group">
+                <label for="password">New Password:</label>
+                {{form.password(id='password', class='form-control')}}
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm New Password:</label>
+                {{form.confirm_password(id='confirm_password', class='form-control')}}
+            </div>
+            <input id="action" type="hidden" name="action" value="update">
+            <button class="btn btn-primary btn-block" type="submit">Update</button>
         </form>
-    </body>
+        {% if user_type == "employee" %}
+            <button class="btn btn-danger btn-block" type="button" onclick="deleteAccount()">Delete Account</button>
+        {% endif %}
+        <a href="{{ url_for('logout') }}" class="btn btn-logout btn-block">Logout</a>
+    </div>
+    <script>
+        function deleteAccount() {
+            if(confirm('Are you sure you want to delete your account? All your data will be lost.')) {
+                var form = document.getElementById('accountForm');
+                var actionInput = document.getElementById('action');
+                actionInput.value = 'delete';
+                form.submit();
+            }
+        }
+    </script>
+</body>
 </html>
