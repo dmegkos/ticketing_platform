@@ -41,7 +41,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand">HelpDesk</a>
+        <a class="navbar-brand" href="{{ url_for('home') }}">HelpDesk</a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 {% if user_type == "employee" %}
@@ -50,7 +50,7 @@
                     <a class="nav-item nav-link" href="{{ url_for('all_issues') }}">All Issues</a>
                 {% endif %}
                 <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('account') }}">About</a>
+                <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
             </div>
         </div>
     </nav>
@@ -84,6 +84,7 @@
             <button class="btn btn-danger btn-block" type="button" onclick="deleteAccount()">Delete Account</button>
         {% endif %}
         <a href="{{ url_for('logout') }}" class="btn btn-logout btn-block">Logout</a>
+        <button class="btn btn-secondary btn-block" onclick="window.history.back()">Back</button>
     </div>
     <script>
         function deleteAccount() {

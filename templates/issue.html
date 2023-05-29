@@ -1,25 +1,84 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Issue Details</title>
-    </head>
-    <body>
-        <h1>Issue Details</h1>
-        <p>Reporter: {{ issue.employee_name }}</p>
-        <p>Reporter ID: {{ issue.employee_id }}</p>
-        <p>Location: {{ issue.location }}</p>
-        <p>Category: {{ issue.category }}</p>
-        <p>Status: {{ issue.status }}</p>
-        <p>Assigned To: {{ issue.support_name }}</p>
-        <p>Description: {{ issue.description }}</p>
+<head>
+    <title>Issue Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dcebf5;
+        }
+
+        .container {
+            width: 25%;
+            margin: auto;
+            margin-top: 5%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .btn {
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            justify-content: space-between;
+        }
+
+        .alert {
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{{ url_for('home') }}">HelpDesk</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                {% if user_type == "employee" %}
+                    <a class="nav-item nav-link" href="{{ url_for('my_issues') }}">My Issues</a>
+                {% elif user_type == "support" %}
+                    <a class="nav-item nav-link" href="{{ url_for('all_issues') }}">All Issues</a>
+                {% endif %}
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h1 class="text-center">Issue Details</h1>
+        <p><strong>Reporter:</strong> {{ issue.employee_name }}</p>
+        <p><strong>Reporter ID:</strong> {{ issue.employee_id }}</p>
+        <p><strong>Location:</strong> {{ issue.location }}</p>
+        <p><strong>Category:</strong> {{ issue.category }}</p>
+        <p><strong>Status:</strong> {{ issue.status }}</p>
+        <p><strong>Assigned To:</strong> {{ issue.support_name }}</p>
+        <p><strong>Description:</strong> {{ issue.description }}</p>
         <form action="{{ url_for('update_issue', issue_id=issue.issue_id) }}" method="GET">
-            <input type="submit" value="Update Issue">
+            <button type="submit" class="btn btn-primary btn-block">Update Issue</button>
         </form>
         {% if issue.employee_email == current_user.email %}
         <form action="{{ url_for('delete_issue', issue_id=issue.issue_id) }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
-            <input type="submit" value="Delete Issue" onclick="return confirm('Are you sure you want to delete this issue?')">
+            <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Are you sure you want to delete this issue?')">Delete Issue</button>
         </form>
         {% endif %}
-    </body>
+        <form action="{% if user_type == 'employee' %}{{ url_for('my_issues') }}{% else %}{{ url_for('all_issues') }}{% endif %}" method="GET">
+            <button type="submit" class="btn btn-secondary btn-block">Back</button>
+        </form>
+    </div>
+</body>
 </html>

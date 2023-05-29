@@ -85,12 +85,8 @@ def load_user(user_id):
 @app.route('/') # home page
 @login_required
 def home():
-    if current_user.is_authenticated:
-        user_type = get_user_type(current_user.email)
-        if user_type == 'employee':
-            return redirect (url_for('my_issues'))
-        elif user_type == 'support':
-            return redirect(url_for('all_issues'))
+    user_type = get_user_type(current_user.email)
+    return render_template('home.html', user_type=user_type)
 
 @app.route('/issues') # issues page for helpdesk staff
 @login_required
@@ -123,7 +119,7 @@ def issue(issue_id):
     user_type = get_user_type(current_user.email)
     if (current_user.email != issue.employee_email) and (user_type != 'support'):
         abort(403)
-    return render_template('issue.html', issue=issue)
+    return render_template('issue.html', issue=issue, user_type=user_type)
 
 @app.route('/issue/new', methods=['GET', 'POST']) # new issue page
 @login_required
@@ -154,7 +150,7 @@ def add_issue():
         db.session.add(issue)
         db.session.commit()
         return redirect(url_for('issue', issue_id=issue.issue_id))
-    return render_template('add_issue.html', title='New Issue', form=form)
+    return render_template('add_issue.html', title='New Issue', form=form, user_type=user_type)
 
 @app.route('/issue/<int:issue_id>/update', methods=['GET', 'POST']) # update issue page
 @login_required
@@ -304,10 +300,33 @@ def account():
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form, user_type=user_type)
 
+@app.route('/about')
+@login_required
+def about():
+    user_type = get_user_type(current_user.email)
+    return render_template('about.html', user_type=user_type)
+
 
 
 # Create the tables in the database
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+
+        # Check if the admin user already exists
+        admin_user = Users.query.filter_by(email="admin@email.com").first()
+        admin_staff = SupportStaff.query.filter_by(email="admin@email.com").first()
+
+        # If not, create them
+        if admin_user is None:
+            admin_user = Users(email="admin@email.com", password=generate_password_hash("qwer1234"))
+            db.session.add(admin_user)
+
+        if admin_staff is None:
+            admin_staff = SupportStaff(name="Admin", email="admin@email.com")
+            db.session.add(admin_staff)
+
+        # Commit the changes
+        db.session.commit()
+
     app.run(debug=True)

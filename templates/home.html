@@ -1,18 +1,59 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <title>IT Helpdesk Ticketing System</title>
-    </head>
-    <body>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <h1>Welcome to the IT Helpdesk Ticketing System!</h1>
-        <p>Please navigate to the issues page to report a new issue or view current issues.</p>
-    </body>
+<head>
+    <title>Welcome</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dcebf5;
+        }
+
+        .container {
+            width: 30%;
+            margin: auto;
+            margin-top: 5%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        .btn {
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{{ url_for('home') }}">HelpDesk</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                {% if user_type == "employee" %}
+                    <a class="nav-item nav-link" href="{{ url_for('my_issues') }}">My Issues</a>
+                {% elif user_type == "support" %}
+                    <a class="nav-item nav-link" href="{{ url_for('all_issues') }}">All Issues</a>
+                {% endif %}
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="text-center">Welcome to HelpDesk Support!</h1>
+        <p class="text-center">You can navigate through the platform using the navigation bar at the top of the page.</p>
+        <p class="text-center">If you encounter any issues, feel free to report them. We're here to help!</p>
+    </div>
+</body>
 </html>

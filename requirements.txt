@@ -1,0 +1,17 @@
+click @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_croot-quwchbn8/click_1646123324461/work
+dnspython==1.16.0
+email-validator @ file:///home/conda/feedstock_root/build_artifacts/email-validator-meta_1674346294289/work
+Flask @ file:///opt/conda/conda-bld/flask_1648041541647/work
+Flask-Login @ file:///Users/ktietz/demo/mc3/conda-bld/flask-login_1629875349535/work
+Flask-SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/flask-sqlalchemy_1616102249273/work
+Flask-WTF @ file:///home/conda/feedstock_root/build_artifacts/flask-wtf_1674028130830/work
+greenlet @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_5b9h4voofy/croot/greenlet_1670513245570/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///opt/conda/conda-bld/jinja2_1647436528585/work
+MarkupSafe @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_12c133f5-0720-4727-9c18-599a3af825723lzwham3/croots/recipe/markupsafe_1654597866058/work
+psycopg2 @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b5vqnh3a1_/croot/psycopg2_1666817457480/work
+psycopg2-binary @ file:///home/conda/feedstock_root/build_artifacts/psycopg2-split_1672159209258/work/psycopg2-binary
+SQLAlchemy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_273be9c0-93b1-43af-992e-5f59da1cdc80zjdbgpvr/croots/recipe/sqlalchemy_1657867858621/work
+Werkzeug @ file:///opt/conda/conda-bld/werkzeug_1645628268370/work
+WTForms @ file:///home/conda/feedstock_root/build_artifacts/wtforms_1640306863281/work

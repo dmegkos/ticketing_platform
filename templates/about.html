@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dcebf5;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            margin-top: 5%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{{ url_for('home') }}">HelpDesk</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                {% if user_type == "employee" %}
+                    <a class="nav-item nav-link" href="{{ url_for('my_issues') }}">My Issues</a>
+                {% elif user_type == "support" %}
+                    <a class="nav-item nav-link" href="{{ url_for('all_issues') }}">All Issues</a>
+                {% endif %}
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="text-center">HelpDesk Ticketing System</h1>
+        <p>A simple Help Desk Ticketing system built using Flask. This system allows employees to report issues, and support staff to manage and address those issues.</p>
+        <h2>Features</h2>
+        <ul>
+            <li>User registration and authentication (Employee, Support Staff)</li>
+            <li>Issue reporting</li>
+            <li>Issue tracking</li>
+            <li>Issue updating</li>
+            <li>Flash messages</li>
+            <li>Pre-populated Admin account</li>
+        </ul>
+        <h2>Technologies Used</h2>
+        <ul>
+            <li>Flask: The Python web framework used for building the application.</li>
+            <li>SQLAlchemy: The Python SQL toolkit and Object-Relational Mapper that gives application developers the full power and flexibility of SQL.</li>
+            <li>PostgreSQL: The database used for storing user and ticket data.</li>
+            <li>Flask-WTF: For form handling.</li>
+            <li>Werkzeug: For password hashing to ensure security.</li>
+            <li>Flask-Login: For handling user sessions.</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,42 +1,93 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>All Issues</title>
-    </head>
-    <body>
+<head>
+    <title>All Issues</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dcebf5;
+        }
+
+        .container {
+            width: 50%;
+            margin: auto;
+            margin-top: 5%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .btn {
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{{ url_for('home') }}">HelpDesk</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                {% if user_type == "employee" %}
+                    <a class="nav-item nav-link" href="{{ url_for('my_issues') }}">My Issues</a>
+                {% elif user_type == "support" %}
+                    <a class="nav-item nav-link" href="{{ url_for('all_issues') }}">All Issues</a>
+                {% endif %}
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% if user_type == "employee" %}
+            <h1 class="text-left">My Issues</h1>
+        {% elif user_type == "support" %}
+            <h1 class="text-left">All Issues</h1>
+        {% endif %}
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="{{ category }}">{{ message }}</div>
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <h1>All Issues</h1>
-        {% if user_type == "employee" %}
-            <a href="{{ url_for('add_issue') }}" class="btn btn-primary">Report New Issue</a>
+        {% if issues %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Reporter</th>
+                        <th>Location</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for issue in issues %}
+                    <tr>
+                        <td style="vertical-align: bottom">{{ issue.employee_name }}</td>
+                        <td style="vertical-align: bottom">{{ issue.location }}</td>
+                        <td style="vertical-align: bottom">{{ issue.category }}</td>
+                        <td style="vertical-align: bottom">{{ issue.status }}</td>
+                        <td style="vertical-align: bottom">{{ issue.support_name }}</td>
+                        <td><a href="{{ url_for('issue', issue_id=issue.issue_id) }}" class="btn btn-info">View Details</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Reporter</th>
-                    <th>Location</th>
-                    <th>Category</th>
-                    <th>Status</th>
-                    <th>Assigned To</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for issue in issues %}
-                <tr>
-                    <td>{{ issue.employee_name }}</td>
-                    <td>{{ issue.location }}</td>
-                    <td>{{ issue.category }}</td>
-                    <td>{{ issue.status }}</td>
-                    <td>{{ issue.support_name }}</td>
-                    <td><a href="{{ url_for('issue', issue_id=issue.issue_id) }}">View Details</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </body>
+        {% if user_type == "employee" %}
+            <a href="{{ url_for('add_issue') }}" class="btn btn-primary btn-block">Report New Issue</a>
+        {% endif %}
+    </div>
+</body>
 </html>
