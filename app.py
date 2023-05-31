@@ -12,7 +12,7 @@ import os
 
 # Setting up the flask application
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ticketing_user:qwerty123@localhost/ticketing_system'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ticketing_user:qwerty123@db/ticketing_system'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['LOGIN_VIEW'] = 'login'
 SECRET_KEY = os.urandom(32)
@@ -329,4 +329,4 @@ if __name__ == "__main__":
         # Commit the changes
         db.session.commit()
 
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
