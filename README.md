@@ -1,6 +1,6 @@
 # HelpDesk Ticketing System
 
-A simple Help Desk Ticketing system built using Flask. This system allows employees to report issues, and support staff to manage and address those issues.
+A Help Desk Ticketing system built using Flask. This system allows employees to report issues, and support staff to manage and address those issues.
 
 ## Features
 
