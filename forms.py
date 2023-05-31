@@ -1,38 +1,57 @@
-# Import libraries
+# Import necessary libraries for form creation
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SubmitField, PasswordField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 
-# Begin implementing the forms
-class IssueFormEmployee(FlaskForm): # Create form for issues as an employee
+# Form for issue creation for an employee
+class IssueFormEmployee(FlaskForm): 
+    # Drop-down menu for issue category selection
     category = SelectField('Category', choices=[('Hardware', 'Hardware'), ('Software', 'Software'), ('Network', 'Network'), ('Printing', 'Printing'), ('Other', 'Other')], validators=[DataRequired()])
+    # Text field for issue description
     description = StringField('Description', validators=[DataRequired()])
+    # Submit button for the form
     submit = SubmitField('Submit')
 
-class IssueFormSupport(FlaskForm): # Create form for issues as support staff
+# Form for issue handling for support staff
+class IssueFormSupport(FlaskForm): 
+    # Drop-down menu for issue status update
     status = SelectField('Status', choices=[('Reported', 'Reported'), ('In Progress', 'In Progress'), ('Resolved', 'Resolved')], default='In Progress')
+    # Submit button for the form
     submit = SubmitField('Submit')
 
-class RegistrationForm(FlaskForm): # Create form for user registration
+# Form for new user registration
+class RegistrationForm(FlaskForm): 
+    # Fields for various user data
     employee_id = IntegerField('Employee ID', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     phone = StringField('Phone', validators=[DataRequired()])
     location = StringField('Location', validators=[DataRequired()])
+    # Fields for password and its confirmation
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    # Submit button for the form
     submit = SubmitField('Sign Up')
 
-class LoginForm(FlaskForm): # Create form for user login
+# Form for user login
+class LoginForm(FlaskForm): 
+    # Fields for email and password
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
+    # Checkbox for remembering the user
     remember = BooleanField('Remember Me')
+    # Submit button for the form
     submit = SubmitField('Login')
 
-class UpdateAccountForm(FlaskForm): # Create form to update user credentials
+# Form for user account updates
+class UpdateAccountForm(FlaskForm): 
+    # Fields for email and password update
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('New Password', validators=[Optional()])
     confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('password', message='Passwords must match')])
+    # Checkbox for remembering the user
     remember = BooleanField('Remember Me')
+    # Submit button for the form to update information
     submit = SubmitField('Update')
-    delete = SubmitField('Delete Account')
+    # Button for account deletion
+    delete = SubmitField('Delete Account') 

@@ -39,9 +39,24 @@ CREATE USER ticketing_user WITH PASSWORD ‘qwerty123’;
 GRANT ALL PRIVILEGES ON DATABASE ticketing_system TO ticketing_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ticketing_user;</code></pre>
 
-4. Run the application:
+4. Run the application (Python terminal):
+ 
+Go to app.py and make sure you run the app without any parameters:
+<pre><code>app.run()</code></pre>
+
+Open terminal and run:
 
 <pre><code>$ python app.py
+</code></pre>
+
+5. Run the application (With Docker and Docker-Compose):
+
+Go to app.py and make sure you run the app with required parameters:
+<pre><code>app.run(host='0.0.0.0', port=5000)</code></pre>
+
+Open terminal and run:
+
+<pre><code>$ docker-compose up
 </code></pre>
 
 ## Application Screenshots

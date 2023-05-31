@@ -1,23 +1,23 @@
-version: '3.8'
-services:
-  db:
-    image: postgres:12.8
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - dbdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: qwerty123
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-  app:
-    build: .
-    ports:
-      - "5000:5000"
-    depends_on:
-      db:
-        condition: service_healthy
-volumes:
-  dbdata:
+version: '3.8' # Specifies the version of Docker Compose to use
+services: # Defines the services to run
+  db: # Name of the first service (PostgreSQL database)
+    image: postgres:12.8 # Specifies the Docker image to use for this service
+    volumes: # Specifies what to mount to the service
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Mounts the init.sql file to the PostgreSQL init folder
+      - dbdata:/var/lib/postgresql/data # Named volume "dbdata" is mapped to the data directory in the container 
+    environment: # Specifies environment variables for the service
+      POSTGRES_PASSWORD: qwerty123 # Sets the password for the PostgreSQL service
+    healthcheck: # Configures healthcheck for the service to ensure it's running correctly
+      test: ["CMD-SHELL", "pg_isready -U postgres"] # Runs this command to check if PostgreSQL is ready
+      interval: 10s # The healthcheck command is run every 10 seconds
+      timeout: 5s # If the healthcheck command takes more than 5 seconds, the healthcheck is considered a failure
+      retries: 5 # The healthcheck will be tried 5 times before considering the service unhealthy
+  app: # Name of the second service (the Flask application)
+    build: . # Builds the Dockerfile in the current directory
+    ports: # Publishes the container's port to the host
+      - "5000:5000" # Maps port 5000 on the host to port 5000 in the container
+    depends_on: # Specifies service dependencies
+      db: # The Flask application service depends on the db service
+        condition: service_healthy # The Flask application service will not start until the db service is healthy
+volumes: # Defines named volumes
+  dbdata: # Named volume to persist data across container lifecycles
